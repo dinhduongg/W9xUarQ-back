@@ -1,6 +1,8 @@
+import { VersioningType } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import { NextFunction, Request, Response } from 'express'
 
 import { AppModule } from './app.module'
 import { TransformInterceptor } from './common/interceptors/transform.interceptor'
@@ -13,9 +15,19 @@ async function bootstrap() {
   const configService = app.get(ConfigService)
   const port = configService.get('port')
 
-  app.setGlobalPrefix('v1')
-  app.useGlobalInterceptors(new TransformInterceptor())
   app.useGlobalFilters(new HttpExceptionFilter())
+  app.useGlobalInterceptors(new TransformInterceptor())
+
+  app.enableVersioning({
+    type: VersioningType.URI,
+    defaultVersion: '1',
+  })
+
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    next()
+  })
+
   app.enableCors()
 
   // swagger

@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
+import { Sequence, SequenceSchema } from './schemas/sequence.schema'
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { MongooseModule } from '@nestjs/mongoose'
       },
       inject: [ConfigService],
     }),
+    MongooseModule.forFeature([{ name: Sequence.name, schema: SequenceSchema }]),
   ],
 })
 export class DatabaseModule {}
