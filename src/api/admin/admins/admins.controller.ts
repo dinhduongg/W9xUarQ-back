@@ -1,11 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common'
 
 import { UseZodValidation } from 'src/common/decorators/zod.decorator'
 import { GlobalQuery } from 'src/common/types/global.type'
 import { AdminsService } from './admins.service'
 import { AdminDto, adminDto, ChangePasswordDto, changePasswordDto, UpdateDto, updateDto } from './dto/admins.dto'
+import { AdminGuard } from 'src/common/guards/admin.guard'
 
 @Controller(['admin/admins', 'admin/employees'])
+@UseGuards(AdminGuard)
 export class AdminsController {
   constructor(private readonly adminsService: AdminsService) {}
 

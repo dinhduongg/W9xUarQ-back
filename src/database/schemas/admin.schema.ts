@@ -1,15 +1,19 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import * as bcrypt from 'bcrypt'
 import { HydratedDocument } from 'mongoose'
-import { v4 as uuidv4 } from 'uuid'
+import { BaseSchema } from './base.schema'
 
 export type AdminDocument = HydratedDocument<Admin>
 
-@Schema({ versionKey: false, timestamps: true, collection: 'admins' })
-export class Admin {
-  @Prop({ default: uuidv4 })
-  _id: string
-
+@Schema({
+  versionKey: false,
+  timestamps: {
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+  },
+  collection: 'admins',
+})
+export class Admin extends BaseSchema {
   @Prop({ type: String })
   name: string
 
@@ -30,6 +34,9 @@ export class Admin {
 
   @Prop({ type: Date, default: null })
   locked_at: Date | null
+
+  @Prop({ type: String, default: null })
+  refresh_token: string | null
 }
 
 export const AdminSchema = SchemaFactory.createForClass(Admin)

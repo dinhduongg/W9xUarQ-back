@@ -4,14 +4,20 @@ import * as bcrypt from 'bcrypt'
 import { Model } from 'mongoose'
 
 import { GlobalQuery } from 'src/common/types/global.type'
+import { AdminRole } from 'src/database/schemas/admin-role.schema'
 import { Admin } from 'src/database/schemas/admin.schema'
 import { AdminDto, ChangePasswordDto, UpdateDto } from './dto/admins.dto'
+import { AdminMapper } from './sub-files/admins.mapper'
 
 @Injectable()
 export class AdminsService {
   constructor(
     @InjectModel(Admin.name)
     private readonly adminModel: Model<Admin>,
+    @InjectModel(AdminRole.name)
+    private readonly adminRoleModel: Model<AdminRole>,
+
+    private readonly mapper: AdminMapper,
   ) {}
 
   async getAll(query: GlobalQuery): Promise<{ admins: Admin[] }> {
@@ -22,17 +28,19 @@ export class AdminsService {
         where['$or'] = [{ name: { $regex: query.q, $options: 'i' } }, { email: { $regex: query.q, $options: 'i' } }]
       }
 
-      const admins = await this.adminModel.find(where, { password: 0 })
+      const admins = await this.adminModel.find(where, { password: 0, refresh_token: 0 }).exec()
       return { admins }
     } catch (error) {
       throw error
     }
   }
 
-  async getOne(id: string): Promise<{ admin: Admin }> {
+  async getOne(id: string): Promise<{ admin: Admin; admin_roles: AdminRole[] }> {
     try {
-      const admin = await this.adminModel.findById(id, { password: 0 })
-      return { admin }
+      const admin = await this.adminModel.findById(id, { password: 0 }).exec()
+      const adminRoles = await this.adminRoleModel.find({ admin_id: id }).populate('role').exec()
+
+      return { admin, admin_roles: adminRoles.map((ar) => this.mapper.toAdminRole(ar)) }
     } catch (error) {
       throw error
     }
