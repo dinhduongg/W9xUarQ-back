@@ -4,8 +4,11 @@ import { AdminRolesModule } from './admin-roles/admin-roles.module'
 import { AdminsModule } from './admins/admins.module'
 import { AuthModule } from './auth/auth.module'
 import { RolesModule } from './roles/roles.module'
+import { CategoriesModule } from './categories/categories.module'
+import { InformationsModule } from './informations/informations.module'
+import { PagesModule } from './pages/pages.module'
 
 @Module({
-  imports: [AuthModule, AdminsModule, RolesModule, AdminRolesModule],
+  imports: [AuthModule, AdminsModule, RolesModule, AdminRolesModule, CategoriesModule, InformationsModule, PagesModule],
 })
 export class AdminModule {}

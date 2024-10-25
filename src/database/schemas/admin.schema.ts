@@ -48,12 +48,5 @@ AdminSchema.pre<AdminDocument>('save', async function (next) {
     this.password = await bcrypt.hash(this.password, salt)
   }
 
-  // if (this.isNew) {
-  //   const modelName = this.collection.name
-  //   const sequenceModel = this.model('Sequence') as Model<SequenceDocument>
-  //   const sequence = await sequenceModel.findOneAndUpdate({ name: modelName }, { $inc: { value: 1 } }, { new: true, upsert: true })
-  //   this.id = sequence.value
-  // }
-
   next()
 })

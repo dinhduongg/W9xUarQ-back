@@ -5,13 +5,10 @@ import { Role } from './role.schema'
 
 export type AdminRoleDocument = HydratedDocument<AdminRole>
 
-@Schema({ versionKey: false, timestamps: false, collection: 'admin_roles' })
+@Schema({ versionKey: false, timestamps: false, collection: 'admin_roles', autoIndex: false })
 export class AdminRole extends IdSchema {
   @Prop({ type: String, required: true })
   admin_id: string
-
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: Role.name })
-  role: Role
 
   @Prop({ type: Boolean, default: false })
   is_read: boolean
@@ -24,6 +21,9 @@ export class AdminRole extends IdSchema {
 
   @Prop({ type: Boolean, default: false })
   is_delete: boolean
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: Role.name })
+  role: Role
 }
 
 export const AdminRoleSchema = SchemaFactory.createForClass(AdminRole)

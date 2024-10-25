@@ -99,7 +99,8 @@ export class AdminsService {
 
   async delete(id: string): Promise<{ message: string }> {
     try {
-      await this.adminModel.findByIdAndDelete(id)
+      await this.adminRoleModel.deleteMany({ admin_id: id }).exec()
+      await this.adminModel.findByIdAndDelete(id).exec()
       return { message: 'Thành công' }
     } catch (error) {
       throw error

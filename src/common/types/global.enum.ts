@@ -6,4 +6,5 @@ export enum LanguageEnum {
 export enum RoleEnum {
   ADMIN = 'admin',
   IT = 'it',
+  EMPLOYEE = 'employee',
 }
