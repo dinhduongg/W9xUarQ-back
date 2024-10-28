@@ -5,6 +5,7 @@ export enum LanguageEnum {
 
 export enum RoleEnum {
   ADMIN = 'admin',
-  IT = 'it',
+  ROLE = 'role',
   EMPLOYEE = 'employee',
+  BASIC = 'basic',
 }

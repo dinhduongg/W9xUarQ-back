@@ -7,8 +7,10 @@ import { RolesModule } from './roles/roles.module'
 import { CategoriesModule } from './categories/categories.module'
 import { InformationsModule } from './informations/informations.module'
 import { PagesModule } from './pages/pages.module'
+import { GroupBasicsModule } from './group-basics/group-basics.module'
+import { BasicsModule } from './basics/basics.module'
 
 @Module({
-  imports: [AuthModule, AdminsModule, RolesModule, AdminRolesModule, CategoriesModule, InformationsModule, PagesModule],
+  imports: [AuthModule, AdminsModule, RolesModule, AdminRolesModule, CategoriesModule, InformationsModule, PagesModule, GroupBasicsModule, BasicsModule],
 })
 export class AdminModule {}

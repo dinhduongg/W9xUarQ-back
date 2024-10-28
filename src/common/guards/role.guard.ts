@@ -14,14 +14,14 @@ export class RoleGuard implements CanActivate {
     }
 
     const request = context.switchToHttp().getRequest()
-    const user = request.user as PayloadAdmin
+    const admin = request.admin as PayloadAdmin
 
     //console.log('roles--->>', roles,user.authorities.some((role) => roles.indexOf(role) >= 0))
     // return user && user.authorities && user.authorities.some((role) => roles.indexOf(role) >= 0)
-    if (!(user && user.roles && user.roles.some((role) => roles.indexOf(role) >= 0))) {
+    if (!(admin && admin.roles && admin.roles.some((role) => roles.indexOf(role) >= 0))) {
       throw new ForbiddenException('Bạn không có quyền sử dụng chức năng này')
     }
 
-    return user && user.roles && user.roles.some((role) => roles.indexOf(role) >= 0)
+    return admin && admin.roles && admin.roles.some((role) => roles.indexOf(role) >= 0)
   }
 }
