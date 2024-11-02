@@ -9,8 +9,9 @@ import { InformationsModule } from './informations/informations.module'
 import { PagesModule } from './pages/pages.module'
 import { GroupBasicsModule } from './group-basics/group-basics.module'
 import { BasicsModule } from './basics/basics.module'
+import { DashboardsModule } from './dashboards/dashboards.module'
 
 @Module({
-  imports: [AuthModule, AdminsModule, RolesModule, AdminRolesModule, CategoriesModule, InformationsModule, PagesModule, GroupBasicsModule, BasicsModule],
+  imports: [AuthModule, AdminsModule, RolesModule, AdminRolesModule, CategoriesModule, InformationsModule, PagesModule, GroupBasicsModule, BasicsModule, DashboardsModule],
 })
 export class AdminModule {}
