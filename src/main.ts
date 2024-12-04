@@ -32,11 +32,7 @@ async function bootstrap() {
   app.enableCors()
 
   // swagger
-  const config = new DocumentBuilder()
-    .setTitle('LinhkienX api document')
-    .addServer(`http://localhost:${port}`)
-    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT', name: 'JWT', description: 'Enter JWT token', in: 'header' }, 'JWT-auth')
-    .build()
+  const config = new DocumentBuilder().setTitle('Api document').addServer(`http://localhost:${port}`).setVersion('1.0').addBearerAuth().build()
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('api/document', app, document, { customCss: '.models { display: none !important; }' })
 
