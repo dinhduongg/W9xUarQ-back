@@ -3,7 +3,7 @@ import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nes
 import { AdminGuard } from 'src/common/guards/admin.guard'
 import { AdminRolesService } from './admin-roles.service'
 import { AdminRoleDto, PermisionDto } from './sub-files/admin-roles.type'
-import { AdminRoleDtoBodySwagger, AdminRoleDtoSwagger, PermisionDtoSwagger } from './swagger/admin-roles.dto'
+import { AdminRoleDtoBodySwagger, AdminRoleDtoSwagger, PermisionDtoSwagger } from './swagger/admin-roles.swagger'
 
 @ApiTags('Admin Roles')
 @ApiBearerAuth()

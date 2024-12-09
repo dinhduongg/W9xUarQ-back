@@ -10,11 +10,11 @@ import { RoleEnum } from 'src/common/types/global.enum'
 import { GlobalQuery } from 'src/common/types/global.type'
 import { AdminsService } from './admins.service'
 import { AdminDto, adminDto, ChangePasswordDto, changePasswordDto, UpdateDto, updateDto } from './dto/admins.dto'
-import { AdminDtoSwagger, ChangePasswordDtoSwagger, UpdateDtoSwagger, UserDto } from './swagger/admins.dto'
+import { AdminDtoSwagger, ChangePasswordDtoSwagger, UpdateDtoSwagger, UserDto } from './swagger/admins.swagger'
 
 @ApiTags('Admins')
 @ApiBearerAuth()
-@Controller(['admin/admins', 'admin/employees'])
+@Controller('admin/employees')
 @UseGuards(AdminGuard, RoleGuard)
 export class AdminsController {
   constructor(private readonly adminsService: AdminsService) {}
