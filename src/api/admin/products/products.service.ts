@@ -2,7 +2,7 @@ import { Injectable, UnprocessableEntityException } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 
-import { PayloadAdmin } from 'src/common/types/global.type'
+import { GlobalQuery, PayloadAdmin } from 'src/common/types/global.type'
 import { makeNameSlug } from 'src/common/utilities/generate-slug'
 import { findWithRegex, isObjectId } from 'src/common/utilities/mongo'
 import { paginate } from 'src/common/utilities/pagination'
@@ -52,6 +52,29 @@ export class ProductsService {
       const product = await this.productModel.findById(id).exec()
 
       return { product }
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async quickSearch(query: GlobalQuery) {
+    try {
+      const { q, limit } = query
+      const where = { deleted_at: null }
+
+      if (!q) {
+        return { products: [] }
+      }
+
+      where['$or'] = [{ name: findWithRegex(q) }, ...(isObjectId(q) ? [{ _id: q }] : [])]
+
+      const products = await this.productModel
+        .find(where)
+        .limit(limit ?? 10)
+        .sort({ created_at: -1 })
+        .exec()
+
+      return { products }
     } catch (error) {
       throw error
     }

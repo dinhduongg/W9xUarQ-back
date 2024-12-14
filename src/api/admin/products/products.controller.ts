@@ -3,10 +3,11 @@ import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiQuery, ApiTags } fro
 import { AdminPayload } from 'src/common/decorators/admin-payload.decorator'
 import { UseZodValidation } from 'src/common/decorators/zod.decorator'
 import { AdminGuard } from 'src/common/guards/admin.guard'
-import { PayloadAdmin } from 'src/common/types/global.type'
+import { GlobalQuery, PayloadAdmin } from 'src/common/types/global.type'
 import { createProductDto, CreateProductDto, ProductQuery, UpdateProductDto, updateProductDto } from './dto/product.dto'
 import { ProductsService } from './products.service'
 import { CreateProductDtoSwagger, ProductQueryDto, UpdateProductDtoSwagger } from './swagger/products.swagger'
+import { GlobalQuerySwagger } from 'src/common/swagger/global-dto'
 
 @ApiTags('Products')
 @ApiBearerAuth()
@@ -27,6 +28,13 @@ export class ProductsController {
   @ApiParam({ name: 'id', example: 'id', description: 'ID' })
   async findOne(@Param('id') id: string) {
     return this.productsService.findOne(id)
+  }
+
+  @Get('quick/search')
+  @ApiOperation({ summary: 'Lấy danh sách sản phẩm cho thanh tìm kiếm' })
+  @ApiQuery({ type: GlobalQuerySwagger })
+  async quickSearch(@Query() query: GlobalQuery) {
+    return this.productsService.quickSearch(query)
   }
 
   @Post()

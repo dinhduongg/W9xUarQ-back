@@ -5,7 +5,7 @@ import * as uuid from 'uuid'
 
 import { Product } from 'src/database/schemas/product.schema'
 import { ProductHistoriesService } from '../product-histories/product-histories.service'
-import { AttributeDto, DeleteAttributeDto, ProductPriceDto, UpdatePriceDto } from './dto/product-prices.dto'
+import { AttributeDto, DeleteAttributeDto, ProductDiscountDto, ProductPriceDto, UpdatePriceDto } from './dto/product-prices.dto'
 import { PayloadAdmin } from 'src/common/types/global.type'
 import { Variant } from './swagger/product-prices.swagger'
 
@@ -110,6 +110,25 @@ export class ProductPricesService {
 
       // ghi lịch sử sửa sản phẩm
       await this.productHistoriesService.create(3, admin.name, product_id, 'Xóa thuộc tính của biến thể giá sản phẩm')
+
+      return { product }
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async discount(id: string, body: ProductDiscountDto, admin: PayloadAdmin) {
+    try {
+      const { type, value, active } = body
+
+      const updateData = { discount: { type, value, active } }
+
+      const product = await this.productModel.findByIdAndUpdate(id, updateData, { new: true }).exec()
+
+      // ghi lịch sử sửa sản phẩm
+      if (active == true) {
+        await this.productHistoriesService.create(3, admin.name, id, 'Giảm giá sản phẩm')
+      }
 
       return { product }
     } catch (error) {

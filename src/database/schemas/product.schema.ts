@@ -5,6 +5,9 @@ import { BaseSchema } from './base.schema'
 import { ProductHistory } from './product-history.schema'
 
 class Discount {
+  @Prop({ type: Boolean, default: false })
+  active: boolean
+
   @Prop({ enum: ['percentage', 'fixed'] })
   type: string
 

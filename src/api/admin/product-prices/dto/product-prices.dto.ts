@@ -102,7 +102,24 @@ export const deleteAttributeDto = z.object({
   attribute_id: z.string({ required_error: 'Vui lòng nhập ID thuộc tính' }),
 })
 
+export const productDiscountDto = z
+  .object({
+    type: z.enum(['percentage', 'fixed'], { required_error: 'Vui lòng chọn loại giảm giá', message: 'Loại giảm gía percentage | fixed' }),
+    value: z.number({ required_error: 'Vui lòng nhập giá trị giảm giá' }),
+    active: z.boolean().default(false),
+  })
+  .superRefine((val, ctx) => {
+    if (val.type == 'percentage' && (val.value < 0 || val.value > 100)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Giá trị giảm giá phải từ 0 đến 100',
+        path: ['value'],
+      })
+    }
+  })
+
 export type ProductPriceDto = z.infer<typeof productPriceDto>
 export type UpdatePriceDto = z.infer<typeof updatePriceDto>
 export type AttributeDto = z.infer<typeof attributeDto>
 export type DeleteAttributeDto = z.infer<typeof deleteAttributeDto>
+export type ProductDiscountDto = z.infer<typeof productDiscountDto>

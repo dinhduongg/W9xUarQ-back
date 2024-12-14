@@ -4,9 +4,20 @@ import { AdminPayload } from 'src/common/decorators/admin-payload.decorator'
 import { UseZodValidation } from 'src/common/decorators/zod.decorator'
 import { AdminGuard } from 'src/common/guards/admin.guard'
 import { PayloadAdmin } from 'src/common/types/global.type'
-import { AttributeDto, attributeDto, DeleteAttributeDto, deleteAttributeDto, ProductPriceDto, productPriceDto, UpdatePriceDto, updatePriceDto } from './dto/product-prices.dto'
+import {
+  AttributeDto,
+  attributeDto,
+  DeleteAttributeDto,
+  deleteAttributeDto,
+  ProductDiscountDto,
+  productDiscountDto,
+  ProductPriceDto,
+  productPriceDto,
+  UpdatePriceDto,
+  updatePriceDto,
+} from './dto/product-prices.dto'
 import { ProductPricesService } from './product-prices.service'
-import { AttributeDtoSwagger, DeleteAttributeDtoSwagger, ProductPriceDtoSwagger, UpdatePriceDtoSwagger } from './swagger/product-prices.swagger'
+import { AttributeDtoSwagger, DeleteAttributeDtoSwagger, ProductDiscountDtoSwagger, ProductPriceDtoSwagger, UpdatePriceDtoSwagger } from './swagger/product-prices.swagger'
 
 @ApiTags('Product prices')
 @ApiBearerAuth()
@@ -55,5 +66,18 @@ export class ProductPricesController {
   @UseZodValidation(deleteAttributeDto)
   async deleteAttribute(@Body() body: DeleteAttributeDto, @AdminPayload() admin: PayloadAdmin) {
     return this.productPricesService.deleteAttribute(body, admin)
+  }
+
+  /**
+   * BEGIN thay đổi giảm giá (% hoặc tiền)
+   */
+
+  @Put('discount/:id')
+  @ApiOperation({ summary: 'Giảm giá cho sản phẩm' })
+  @ApiParam({ name: 'id', example: 'id', description: 'ID của sản phẩm cần giảm giá' })
+  @ApiBody({ type: ProductDiscountDtoSwagger })
+  @UseZodValidation(productDiscountDto)
+  async discount(@Param('id') id: string, @Body() body: ProductDiscountDto, @AdminPayload() admin: PayloadAdmin) {
+    return this.productPricesService.discount(id, body, admin)
   }
 }

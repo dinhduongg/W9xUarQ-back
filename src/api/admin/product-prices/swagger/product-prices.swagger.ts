@@ -70,3 +70,14 @@ export class DeleteAttributeDtoSwagger {
   @ApiProperty({ type: String })
   attribute_id: string
 }
+
+export class ProductDiscountDtoSwagger {
+  @ApiProperty({ type: String })
+  type: 'percentage' | 'fixed'
+
+  @ApiProperty({ type: Number })
+  value: number
+
+  @ApiProperty({ type: Boolean })
+  active: boolean
+}
