@@ -12,11 +12,12 @@ import { Sequence, SequenceSchema } from './schemas/sequence.schema'
         const mongodb_username = configService.get('mongo_db.username')
         const mongodb_password = configService.get('mongo_db.password')
         const mongodb_app_name = configService.get('mongo_db.app_name')
+        const mongodb_database_name = configService.get('mongo_db.database_name')
 
         return {
           uri: `mongodb+srv://${mongodb_username}:${mongodb_password}@w9xuarq-back.h9uv7.mongodb.net/?retryWrites=true&w=majority`,
           appName: mongodb_app_name,
-          dbName: 'test',
+          dbName: mongodb_database_name,
         }
       },
       inject: [ConfigService],

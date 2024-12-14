@@ -3,7 +3,8 @@ import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { CloudinaryService } from 'src/api/cloudinary/cloudinary.service'
 import { GlobalQuery } from 'src/common/types/global.type'
-import { paginate } from 'src/common/utilities/pagination.util'
+import { findWithRegex } from 'src/common/utilities/mongo'
+import { paginate } from 'src/common/utilities/pagination'
 
 import { Library } from 'src/database/schemas/libraries.schema'
 
@@ -20,7 +21,7 @@ export class LibrariesService {
       const where = {}
 
       if (q) {
-        where['file_name'] = { $regex: new RegExp(q, 'i') }
+        where['file_name'] = findWithRegex(q)
       }
 
       if (size) {

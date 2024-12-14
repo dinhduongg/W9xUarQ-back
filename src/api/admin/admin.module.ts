@@ -11,6 +11,10 @@ import { GroupBasicsModule } from './group-basics/group-basics.module'
 import { BasicsModule } from './basics/basics.module'
 import { DashboardsModule } from './dashboards/dashboards.module'
 import { LibrariesModule } from './libraries/libraries.module'
+import { ProductAttributesModule } from './product-attributes/product-attributes.module'
+import { ProductsModule } from './products/products.module'
+import { ProductHistoriesModule } from './product-histories/product-histories.module'
+import { ProductPricesModule } from './product-prices/product-prices.module'
 
 @Module({
   imports: [
@@ -25,6 +29,10 @@ import { LibrariesModule } from './libraries/libraries.module'
     BasicsModule,
     DashboardsModule,
     LibrariesModule,
+    ProductAttributesModule,
+    ProductsModule,
+    ProductHistoriesModule,
+    ProductPricesModule,
   ],
 })
 export class AdminModule {}
