@@ -9,3 +9,8 @@ export enum RoleEnum {
   EMPLOYEE = 'employee',
   BASIC = 'basic',
 }
+
+export enum UpoadFolderEnum {
+  LIBRARIES = 'upload/libraries',
+  SLIDES = 'upload/slides',
+}

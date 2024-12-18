@@ -15,6 +15,7 @@ import { ProductAttributesModule } from './product-attributes/product-attributes
 import { ProductsModule } from './products/products.module'
 import { ProductHistoriesModule } from './product-histories/product-histories.module'
 import { ProductPricesModule } from './product-prices/product-prices.module'
+import { SlidesModule } from './slides/slides.module'
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { ProductPricesModule } from './product-prices/product-prices.module'
     ProductsModule,
     ProductHistoriesModule,
     ProductPricesModule,
+    SlidesModule,
   ],
 })
 export class AdminModule {}

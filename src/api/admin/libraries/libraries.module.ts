@@ -11,5 +11,6 @@ import { LibrariesService } from './libraries.service'
   imports: [MongooseModule.forFeature([{ name: Library.name, schema: LibrarySchema }]), AdminsModule, CloudinaryModule],
   controllers: [LibrariesController],
   providers: [LibrariesService],
+  exports: [LibrariesService],
 })
 export class LibrariesModule {}

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { CloudinaryService } from 'src/api/cloudinary/cloudinary.service'
+import { UpoadFolderEnum } from 'src/common/types/global.enum'
 import { GlobalQuery } from 'src/common/types/global.type'
 import { findWithRegex } from 'src/common/utilities/mongo'
 import { paginate } from 'src/common/utilities/pagination'
@@ -38,7 +39,7 @@ export class LibrariesService {
 
   async uploadImage(file: Express.Multer.File) {
     try {
-      const res = await this.cloudinaryService.uploadImage(file, 'upload/libraries')
+      const res = await this.cloudinaryService.uploadImage(file, UpoadFolderEnum.LIBRARIES)
 
       const body = {
         public_id: res.public_id,
@@ -67,7 +68,7 @@ export class LibrariesService {
 
       await this.cloudinaryService.deleteImage(library.public_id)
 
-      const res = await this.cloudinaryService.uploadImage(file, 'upload/libraries')
+      const res = await this.cloudinaryService.uploadImage(file, UpoadFolderEnum.LIBRARIES)
 
       const body = {
         public_id: res.public_id,
