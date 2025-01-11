@@ -3,9 +3,10 @@ import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 
 import { GlobalQuery } from 'src/common/types/global.type'
+import { makeNameSlug } from 'src/common/utilities/generate-slug'
+import { findWithRegex } from 'src/common/utilities/mongo'
 import { Page } from 'src/database/schemas/page.schema'
 import { PageDto } from './dto/pages.dto'
-import { makeNameSlug } from 'src/common/utilities/generate-slug'
 
 @Injectable()
 export class PagesService {
@@ -17,7 +18,7 @@ export class PagesService {
       const where = {}
 
       if (q) {
-        where['name'] = { $regex: q, $options: 'i' }
+        where['name'] = findWithRegex(q)
       }
 
       const pages = await this.pageModel.find(where).populate({ path: 'information', select: 'name' }).sort({ created_at: -1 }).exec()

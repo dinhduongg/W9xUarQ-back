@@ -1,7 +1,8 @@
 import { Types } from 'mongoose'
+import { convertToRegex } from './regex-search'
 
 export const findWithRegex = (query: string) => {
-  return { $regex: query, $options: 'i' }
+  return { $regex: convertToRegex(query) }
 }
 
 export const isObjectId = (id: string) => {

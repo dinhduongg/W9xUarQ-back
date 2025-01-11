@@ -4,6 +4,7 @@ import * as bcrypt from 'bcrypt'
 import { Model } from 'mongoose'
 
 import { GlobalQuery } from 'src/common/types/global.type'
+import { findWithRegex } from 'src/common/utilities/mongo'
 import { AdminRole } from 'src/database/schemas/admin-role.schema'
 import { Admin } from 'src/database/schemas/admin.schema'
 import { AdminDto, ChangePasswordDto, UpdateDto } from './dto/admins.dto'
@@ -25,7 +26,7 @@ export class AdminsService {
       const where = {}
 
       if (query.q) {
-        where['$or'] = [{ name: { $regex: query.q, $options: 'i' } }, { email: { $regex: query.q, $options: 'i' } }]
+        where['$or'] = [{ name: findWithRegex(query.q) }, { email: findWithRegex(query.q) }]
       }
 
       const admins = await this.adminModel.find(where, { password: 0, refresh_token: 0 }).exec()
